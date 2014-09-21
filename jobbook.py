@@ -25,7 +25,6 @@ class JobBook(Gtk.Notebook):
       sw.add(self.treeview)
      
       vbox = Gtk.VBox()
-      vbox.set_name("test")
       vbox.pack_start(sw, True, True, 0)
 
       hbox = Gtk.HBox(False, 0)
@@ -53,6 +52,10 @@ class JobBook(Gtk.Notebook):
       if(self.jobs.get_current_job_by_id(job_id)["STATUS"] == "E" or self.jobs.get_current_job_by_id(job_id)["STATUS"] == "Q"):
          # Can't download data from a complete or queued job.
          return
+         
+      # List all files on the first compute node
+      nodes = self.cx.get_nodes_list(job_id)
+      logging.info(self.cx.ls_on_node(job_id, nodes[0]))
          
       dialog = DownloadDialog(self.parent)
       response = dialog.run()

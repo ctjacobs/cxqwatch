@@ -107,6 +107,9 @@ class Jobs(Gtk.ListStore):
 
       nodes = self.cx.get_nodes_list(job_id)
       
+      # List all files on the first compute node
+      print self.cx.ls_on_node(job_id, nodes[0])
+      
       self.cx.clean_temp()
       
       for node in nodes:

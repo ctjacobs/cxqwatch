@@ -12,7 +12,7 @@ from connection_dialog import *
 class Flcx(Gtk.Window):
 
    def __init__(self):
-      Gtk.Window.__init__(self, title="flcx v0.1")
+      Gtk.Window.__init__(self, title="Flcx v0.1")
       self.set_size_request(800, 600) # Default to an 800 x 600 resolution.
       
       # Kills the application if the close button is clicked on the main window itself. 
@@ -52,8 +52,8 @@ class Flcx(Gtk.Window):
       
       self.jobbook.jobs.populate() # Initial population of the jobs window.
       
-      # Refresh the window every few seconds.
-      self.query_event = GObject.timeout_add(10000, self.jobbook.jobs.refresh)
+      # Refresh the window every few minutes.
+      self.query_event = GObject.timeout_add(300000, self.jobbook.jobs.refresh)
       return
    
    def cx_disconnect(self, widget=None):

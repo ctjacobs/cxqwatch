@@ -90,7 +90,12 @@ class CX:
       logging.info("Cleaning temp directory (%s)" % TEMP_DIR)
       self.send_command("rm -rf %s; mkdir %s" % (TEMP_DIR, TEMP_DIR))
       return
-      
+
+   def ls_on_node(self, job_id, node):
+      logging.info("Listing files on node %s..." % node)
+      response = self.send_command("ssh %s \"ls /tmp/pbs.%s/\"" % (node, job_id))
+      return response
+
    def get_data_from_node(self, job_id, node, pattern):
       logging.info("Getting data from node %s..." % node)
       self.send_command("scp -r %s:/tmp/pbs.%s/*%s* %s" % (node, job_id, pattern, TEMP_DIR))
