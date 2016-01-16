@@ -55,8 +55,11 @@ class CX:
       logging.info("Disconnecting from login node...")
       try:
          self.shell.close()
-      except paramiko.SSHException, e:
-         logging.exception(str(e))
+      except paramiko.SSHException as e:
+         logging.error(str(e))
+         return False
+      except AttributeError as e:
+         logging.error("Cannot disconnect - no connection exists!")
          return False
       logging.info("Disconnected successfully.")
       return True

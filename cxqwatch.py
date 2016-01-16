@@ -36,7 +36,7 @@ from connection_dialog import *
 class CXQWatch(Gtk.Window):
 
    def __init__(self):
-      Gtk.Window.__init__(self, title="cxqwatch v0.1")
+      Gtk.Window.__init__(self, title="cxqwatch")
       self.set_size_request(800, 600) # Default to an 800 x 600 resolution.
       
       # Kills the application if the close button is clicked on the main window itself. 
@@ -82,7 +82,10 @@ class CXQWatch(Gtk.Window):
    
    def cx_disconnect(self, widget=None):
       self.cx.login_disconnect()
-      GObject.source_remove(self.query_event)
+      try:
+         GObject.source_remove(self.query_event)
+      except AttributeError:
+         logging.error("Cannot remove timer since it doesn't exist.")
       return
 
 if(__name__ == "__main__"):
