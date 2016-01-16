@@ -5,8 +5,6 @@ from scpclient import *
 import re
 import logging
 
-TEMP_DIR = "/tmp/ctjacobs"
-
 class CX:
 
    def __init__(self, shell=None):
@@ -25,6 +23,7 @@ class CX:
          logging.exception(str(e))
          return False
 
+      self.temp_dir = "/tmp/tmp_%s" % (username)
       logging.info("Connected successfully.")
       return True
 
@@ -87,8 +86,8 @@ class CX:
       return nodes
       
    def clean_temp(self):
-      logging.info("Cleaning temp directory (%s)" % TEMP_DIR)
-      self.send_command("rm -rf %s; mkdir %s" % (TEMP_DIR, TEMP_DIR))
+      logging.info("Cleaning temp directory (%s)" % self.temp_dir)
+      self.send_command("rm -rf %s; mkdir %s" % (self.temp_dir, self.temp_dir))
       return
 
    def ls_on_node(self, job_id, node):
@@ -98,12 +97,12 @@ class CX:
 
    def get_data_from_node(self, job_id, node, pattern):
       logging.info("Getting data from node %s..." % node)
-      self.send_command("scp -r %s:/tmp/pbs.%s/*%s* %s" % (node, job_id, pattern, TEMP_DIR))
+      self.send_command("scp -r %s:/tmp/pbs.%s/*%s* %s" % (node, job_id, pattern, self.temp_dir))
       return
    
    def get_data_from_cx(self, pattern):
       logging.info("Downloading data from CX1...")
-      with closing(ReadDir(self.shell.get_transport(), '%s' % TEMP_DIR)) as scp:
+      with closing(ReadDir(self.shell.get_transport(), '%s' % self.temp_dir)) as scp:
          scp.receive_dir('.', preserve_times=True)
 
       return
