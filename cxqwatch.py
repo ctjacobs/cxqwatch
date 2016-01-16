@@ -9,10 +9,10 @@ from cx import *
 from jobbook import *
 from connection_dialog import *
    
-class Flcx(Gtk.Window):
+class CXQWatch(Gtk.Window):
 
    def __init__(self):
-      Gtk.Window.__init__(self, title="Flcx v0.1")
+      Gtk.Window.__init__(self, title="cxqwatch v0.1")
       self.set_size_request(800, 600) # Default to an 800 x 600 resolution.
       
       # Kills the application if the close button is clicked on the main window itself. 
@@ -68,6 +68,6 @@ if(__name__ == "__main__"):
                        datefmt="%Y-%m-%d %H:%M:%S")
    
    signal.signal(signal.SIGINT, signal.SIG_DFL) # Exit if a SIGINT signal is captured.
-   application = Flcx() # Populate the main window and show it.
+   application = CXQWatch() # Populate the main window and show it.
    Gtk.main() # Start up the event loop!
    
